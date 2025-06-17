@@ -3,16 +3,19 @@ import { getUsers, createUser, getUser, deleteUser, updateUser } from "../contro
 
 const router = express.Router();
 
-
+   //GET/items - Retrieve all items
 router.get('/users', getUsers);
 
+   //GET/items/:id - Retrieve a single item by ID
+ router.get('/users/:id', getUser);
+
+  //POST/items - Create a new item
 router.post('/', createUser);
 
-router.get('/users:id', getUser);
+ //PUT/items/:id - Update an item by ID
+router.patch('/users/:id', updateUser);
 
-router.delete('/users:id', deleteUser);
-
-router.patch('/users:id', updateUser);
- 
+ //DELETE/items/:id - Retrieve a single item by ID
+router.delete('/users/:id', deleteUser);
 
 export default router;
