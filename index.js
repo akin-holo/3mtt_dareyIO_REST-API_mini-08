@@ -1,11 +1,19 @@
 import express from "express";
 import usersRoutes from './routes/users.js';
+import itemsRoutes from "./routes/items.js";
 
 const app = express();  
 const PORT = 5000;
 
    //middleware
 app.use(express.json()); 
+app.use((err, req, res, next) => {
+  if (err instanceof SyntaxError && err.status === 400 && 'body' in err) {
+    return res.status(400).json({ message: 'Invalid JSON format' });
+  }
+  next(err);
+});
+
 
   //root URL
 app.get('/', (req, res) => res.send(`
@@ -15,6 +23,7 @@ app.get('/', (req, res) => res.send(`
    `));
 
 app.use('/', usersRoutes);
+app.use('/', itemsRoutes);
 
 // handling invalid routes
 app.use((req, res) => {

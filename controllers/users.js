@@ -1,52 +1,52 @@
-import { v4 as uuidv4 } from "uuid";
-
-// simple in-memory data store
-let users = [];
+import users from '../data/users.js';
+import { v4 as uuidv4 } from 'uuid';
 
 export const getUsers = (req, res) => {
-   res.send(users);
-}
+  res.json(users);
+};
 
 export const createUser = (req, res) => {
-   const user = req.body;
-   users.push({ ...user, id: uuidv4() });
-   res.send(`User with the name ${user.firstName} is addes to the database`);
-}
+  const { firstName, lastName, description } = req.body;
+  const newUser = { id: uuidv4(), firstName, lastName, description };
+  users.push(newUser);
+  res.status(201).json({ message: 'User added successfully', newUser });
+};
 
 export const getUser = (req, res) => {
-   const { id } = req.params;
-   const foundUser = users.find((user) => user.id === id);
+  const { id } = req.params;
+  const foundUser = users.find(user => user.id === id);
 
-   if (!foundUser) {
-      return res.status(404).json({
-         message: `User with ID ${id} not found`
-      });
-   }
-   res.send(foundUser);
-}
+  if (!foundUser) {
+    return res.status(404).json({ message: `User with ID ${id} not found` });
+  }
+
+  res.json(foundUser);
+};
 
 export const updateUser = (req, res) => {
-   const { id } = req.params;
-   const {firstName, lastName, age} = req.body;
-   const user = users.find((user) => user.id === id);
+  const { id } = req.params;
+  const { firstName, lastName, description } = req.body;
+  const user = users.find(user => user.id === id);
 
-   if (!user) {
-         return res.status(404).json({ message: `User with ID ${id} not found` });
-   }
+  if (!user) {
+    return res.status(404).json({ message: `User with ID ${id} not found` });
+  }
 
-   if(firstName)user.firstName = firstName;
-   if(lastName) user.lastName = lastName
-   if(age) user.age = age;
+  if (firstName) user.firstName = firstName;
+  if (lastName) user.lastName = lastName;
+  if (description) user.description = description;
 
-   res.send(`User ${id} data updated`);
-}
+  res.json({ message: `User ${id} updated`, user });
+};
 
 export const deleteUser = (req, res) => {
-   const { id } = req.params;
-   users = users.filter((user) => user.id !== id);
+  const { id } = req.params;
+  const index = users.findIndex(user => user.id === id);
 
-   if (!users) {
-      return res.status(404).json({ message: `User with ID ${id} not found` });
-   }
-   res.send(`User with the id ${id} has been deleted`);
-}
+  if (index === -1) {
+    return res.status(404).json({ message: `User with ID ${id} not found` });
+  }
+
+  const deletedUser = users.splice(index, 1);
+  res.json({ message: `User with ID ${id} deleted`, deletedUser });
+};
