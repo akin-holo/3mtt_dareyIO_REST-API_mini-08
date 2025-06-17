@@ -14,7 +14,6 @@ app.get('/', (req, res) => res.send(`
       </h>
    `));
 
-
 app.use('/', usersRoutes);
 
 // handling invalid routes
@@ -30,7 +29,5 @@ app.use((err, reg, res, next) => {
       message: err.message || 'Something went wrong, please try again later'
    });
 });
-
-
 
 app.listen(PORT, () => console.log(`Server running on port: http://localhost:${PORT}`))
