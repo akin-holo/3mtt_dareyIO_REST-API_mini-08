@@ -27,6 +27,10 @@ index.js
       `));
 ```
 
+## screenshot
+![root url responding with "Hello World!"](./asset/Hello-World!.png)
+![Example of API request using Postman tool](./asset/example-postman-API-request.png)
+
 routes/users.js
 ```js
    import express from "express";
