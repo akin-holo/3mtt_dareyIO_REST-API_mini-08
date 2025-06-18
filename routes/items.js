@@ -1,11 +1,11 @@
 import express from "express";
-import { getUsers, createUser, getUser, deleteUser, updateUser } from "../controllers/users.js";
+import { getItems, createItem, getItem, deleteItem, updateItem } from "../controllers/items.js";
 import { body, validationResult } from "express-validator";
 
 const router = express.Router();
 
-router.get('/users', getUsers);
-router.get('/users/:id', getUser);
+router.get('/Items', getItems);
+router.get('/Items/:id', getItem);
 
 //  PUT with validation middleware
 router.post(
@@ -25,7 +25,7 @@ router.post(
   }
 );
 
-router.patch('/users/:id', updateUser);
-router.delete('/users/:id', deleteUser);
+router.patch('/Items/:id', updateItem);
+router.delete('/Items/:id', deleteItem);
 
 export default router;

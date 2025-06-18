@@ -1,12 +1,18 @@
 import { v4 as uuidv4 } from "uuid";
 
-const users = [
+const items = [
    {
       id: uuidv4(),
       firstName: "Akinseloyin",
       lastName: "Holo",
       description: "Software Development - Cohort 3"
+   },
+   {
+      id: uuidv4(),
+      firstName: "John",
+      lastName: "Doe",
+      description: "UI/UX - Cohort 3"
    }
 ]
 
-export default users;
+export default items;

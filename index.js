@@ -1,5 +1,5 @@
 import express from "express";
-import usersRoutes from './routes/users.js';
+import ItemsRoutes from './routes/items.js';
 import itemsRoutes from "./routes/items.js";
 
 const app = express();  
@@ -22,7 +22,7 @@ app.get('/', (req, res) => res.send(`
       </h>
    `));
 
-app.use('/', usersRoutes);
+app.use('/', ItemsRoutes);
 app.use('/', itemsRoutes);
 
 // handling invalid routes
