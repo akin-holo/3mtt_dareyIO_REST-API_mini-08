@@ -17,11 +17,11 @@ A basic Express.js application that includes:
 ## Project Structure
 .
 ├── controllers/
-│   └── users.js
+│   └── items.js
 ├── data/
-│   └── users.js
+│   └── items.js
 ├── routes/
-│   └── users.js
+│   └── items.js
 ├── index.js
 ├── assets/
 │   ├── Hello-World!.png
@@ -34,7 +34,7 @@ A basic Express.js application that includes:
 ```js
    // index.js
 import express from "express";
-import usersRoutes from './routes/users.js';
+import itemsRoutes from './routes/items.js';
 
 const app = express();  
 const PORT = 5000;
@@ -47,20 +47,20 @@ app.get('/', (req, res) => res.send(`
    </h1>
 `));
 
-app.use('/', usersRoutes);
+app.use('/', itemsRoutes);
 ```
 
-<!-- routes/users.js -->
+<!-- routes/items.js -->
 ```js
-   // routes/users.js
+   // routes/items.js
 import express from "express";
-import { getUsers, createUser, getUser, deleteUser, updateUser } from "../controllers/users.js";
+import { getItems, createItem, getItem, deleteItem, updateItem } from "../controllers/items.js";
 import { body, validationResult } from "express-validator";
 
 const router = express.Router();
 
-router.get('/users', getUsers);
-router.get('/users/:id', getUser);
+router.get('/items', getItems);
+router.get('/items/:id', getItem);
 
 // POST /users with validation
 router.post(
@@ -75,7 +75,7 @@ router.post(
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
     }
-    createUser(req, res);
+    createItem(req, res);
   }
 );
 ```
