@@ -1,11 +1,13 @@
 # Express.js Application
 
-A basic Express.js application that includes:
- - A root URL that returns a custom-styled `"Hello World!"` message
- - A `/users` API with full CRUD functionality
+A basic Express.js application featuring:
+ - A root URL that returns `Hello World!` message
+ - A `/items` API with full CRUD functionality
+ - Query filtering for item fields like `firstName`, `lastName`, or `description`
  - Middleware for parsing JSON
  - Proper error handling for unknown routes and bad requests
  - Input validation using `express-validator`
+ - File-based data persistence using `fs` (`itemsData.json`) for in-memory
 
 ## Features
 - Create, Read, Update, Delete (CRUD) operations for user records
@@ -19,18 +21,18 @@ A basic Express.js application that includes:
 ├── controllers/
 │   └── items.js
 ├── data/
-│   └── items.js
+│   └── itemsData.json
 ├── routes/
 │   └── items.js
 ├── index.js
 ├── assets/
 │   ├── Hello-World!.png
 │   └── example-postman-API-request.png
+    └── Hello-World!.png
 └── README.md
 
 ## Example Usage
 `
-<!-- index.js -->
 ```js
    // index.js
 import express from "express";
@@ -41,20 +43,15 @@ const PORT = 5000;
 
 app.use(express.json());
 
-app.get('/', (req, res) => res.send(`
-   <h1 style='color: #ff0000; text-align: center'>
-      Hello World!
-   </h1>
-`));
+app.get('/', (req, res) => res.send("Hello World!"));
 
 app.use('/', itemsRoutes);
 ```
 
-<!-- routes/items.js -->
 ```js
    // routes/items.js
 import express from "express";
-import { getItems, createItem, getItem, deleteItem, updateItem } from "../controllers/items.js";
+import { getItems, createItem, getItem, deleteItem, putItem } from "../controllers/items.js";
 import { body, validationResult } from "express-validator";
 
 const router = express.Router();
@@ -62,7 +59,6 @@ const router = express.Router();
 router.get('/items', getItems);
 router.get('/items/:id', getItem);
 
-// POST /users with validation
 router.post(
   '/',
   [
@@ -78,6 +74,11 @@ router.post(
     createItem(req, res);
   }
 );
+
+router.patch('/items/:id', putItem);
+router.delete('/items/:id', deleteItem);
+
+export default router;
 ```
 `
 ## screenshot

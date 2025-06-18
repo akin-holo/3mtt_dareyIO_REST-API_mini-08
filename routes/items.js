@@ -1,13 +1,12 @@
-import express from "express";
-import { getItems, createItem, getItem, deleteItem, updateItem } from "../controllers/items.js";
-import { body, validationResult } from "express-validator";
+import express from 'express';
+import { getItems, createItem, getItem, deleteItem, putItem } from '../controllers/items.js';
+import { body, validationResult } from 'express-validator';
 
 const router = express.Router();
 
-router.get('/Items', getItems);
-router.get('/Items/:id', getItem);
+router.get('/items', getItems);
+router.get('/items/:id', getItem);
 
-//  PUT with validation middleware
 router.post(
   '/',
   [
@@ -15,17 +14,16 @@ router.post(
     body('lastName').notEmpty().withMessage('Last name is required'),
     body('description').notEmpty().withMessage('Description is required')
   ],
-  (req, res, next) => {
+  (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      // If errors, respond with 400 and the details
       return res.status(400).json({ errors: errors.array() });
     }
-    createUser(req, res);
+    createItem(req, res);
   }
 );
 
-router.patch('/Items/:id', updateItem);
-router.delete('/Items/:id', deleteItem);
+router.patch('/items/:id', putItem);
+router.delete('/items/:id', deleteItem);
 
 export default router;
